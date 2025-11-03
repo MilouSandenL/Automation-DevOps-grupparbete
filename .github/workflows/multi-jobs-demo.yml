@@ -26,6 +26,6 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - name: Använd output från första job
-        run: echo "Received: ${{ needs.prepare.outputs.message }}"
+    - name: Använd output från första job
+      run: 'echo "Received: ${{ needs.prepare.outputs.message }}"'
         
