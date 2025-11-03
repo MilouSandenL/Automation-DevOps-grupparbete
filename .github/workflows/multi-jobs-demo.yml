@@ -1,0 +1,31 @@
+name: multi jobs demo
+on:
+  issues:
+    types: [opened]   # triggas när en ny Issue öppnas
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    env:
+      GREETING: "Hej"
+      TARGET: "Alla"
+    steps:
+      - name: Sätt ihop meddelande
+        id: prep
+        run: |
+          MSG="${GREETING}, ${TARGET}!"
+          echo "message=$MSG" >> "$GITHUB_OUTPUT"
+
+      - name: Visa secret maskerat
+        env:
+          TOKEN: ${{ secrets.API_TOKEN_DEVOPS }}
+        run: |
+          echo "Token length: ${#TOKEN}"   # själva värdet maskas
+
+  consume:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Använd output från första job
+        run: echo "Received: ${{ needs.prepare.outputs.message }}"
+        
