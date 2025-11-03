@@ -1,7 +1,7 @@
 name: multi jobs demo
 on:
   issues:
-    types: [opened]   # triggas när en ny Issue öppnas
+    types: [opened]
 
 jobs:
   prepare:
@@ -20,7 +20,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.API_TOKEN_DEVOPS }}
         run: |
-          echo "Token length: ${#TOKEN}"   # själva värdet maskas
+          echo "Token length: ${#TOKEN}"
 
   consume:
     needs: prepare
