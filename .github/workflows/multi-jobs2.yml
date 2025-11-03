@@ -1,0 +1,17 @@
+name: multi jobs min
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - id: prep
+        run: echo "message=Hejsan!" >> "$GITHUB_OUTPUT"
+
+  consume:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Received: ${{ needs.prepare.outputs.message }}"
