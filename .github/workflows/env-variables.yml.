@@ -1,5 +1,6 @@
 name: env variables demo
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 jobs:
   show-envs:
     runs-on: ubuntu-latest
