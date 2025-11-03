@@ -1,4 +1,4 @@
-name: env variables demo 1
+name: env variables demo
 on:
   workflow_dispatch:
 jobs:
