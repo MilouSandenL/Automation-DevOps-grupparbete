@@ -22,13 +22,13 @@ jobs:
         run: |
           echo "Token length: ${#TOKEN}"   # själva värdet maskas
 
-consume:
-  needs: prepare
-  runs-on: ubuntu-latest
-  env:
-    RECEIVED: ${{ needs.prepare.outputs.message }}
-  steps:
-    - name: Skriv ut meddelande
-      run: |
-        echo "Received: ${RECEIVED}"
-        
+  consume:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      RECEIVED: ${{ needs.prepare.outputs.message }}
+    steps:
+      - name: Skriv ut meddelande
+        run: |
+          echo "Received: ${RECEIVED}"
+          
