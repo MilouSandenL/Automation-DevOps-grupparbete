@@ -1,7 +1,7 @@
 name: multi jobs demo
 on:
   issues:
-    types: [opened]  
+    types: [opened]
 
 jobs:
   prepare:
@@ -15,16 +15,16 @@ jobs:
         run: |
           MSG="${GREETING}, ${TARGET}!"
           echo "message=$MSG" >> "$GITHUB_OUTPUT"
+
       - name: Visa secret maskerat
         env:
           TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          echo "Token length: ${#TOKEN}"   
+          echo "Token length: ${#TOKEN}"
 
   consume:
-    needs: prepare         # detta job körs först när "prepare" är klart
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Använd output från första job
         run: echo "Received: ${{ needs.prepare.outputs.message }}"
-  
