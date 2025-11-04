@@ -1,7 +1,7 @@
 name: test and build
 on:
-  workflow_dispatch:    # manuell start
-  push:                 # körs när dessa filer ändras
+  workflow_dispatch:
+  push:
     paths:
       - "app.py"
       - "tests/**"
@@ -11,38 +11,27 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      GREETING: "Hej"
-      TARGET: "CI"
     steps:
       - uses: actions/checkout@v4
-      - name: Visa info
-        run: |
-          echo "${GREETING}, ${TARGET}! Kör tester..."
-          echo "Repo: $GITHUB_REPOSITORY | Run: $GITHUB_RUN_NUMBER"
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Installera beroenden
-        run: |
+      - run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Kör tester
-        run: pytest -q
+      - run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+      - run: pytest -q
 
   build:
-    needs: test                 # körs bara om 'test' lyckas
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Skapa build-artifact
-        run: |
+      - run: |
           mkdir -p dist
           echo "Build OK $(date)" > dist/build.txt
           tar -czf dist/app.tar.gz app.py
-      - name: Ladda upp artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: python-build
           path: dist/
