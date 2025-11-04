@@ -1,7 +1,10 @@
-def main():
-    print("Hej från min Docker-app!")
-    namn = input("Vad heter du? ")
-    print(f"Trevligt att träffas, {namn}!")
-
-if __name__ == "__main__":
-    main()
+from flask import Flask
+ 
+app = Flask(__name__)
+ 
+@app.route('/')
+def hello_world():
+    return '<h1>Hello World!</h1>'
+ 
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
